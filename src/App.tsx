@@ -1,7 +1,12 @@
 import React from "react";
+import Konzept from "./Konzept";
 
 function App() {
-  return <div>konzept</div>;
+  return (
+    <div>
+      <Konzept />
+    </div>
+  );
 }
 
 export default App;
