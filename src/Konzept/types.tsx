@@ -8,6 +8,8 @@ type Text = {
   strikethrough?: boolean;
   highlight?: boolean;
 };
+export type Mark = "bold" | "highlight" | "italic" | "strikethrough";
+
 export type Editor = BaseEditor & ReactEditor;
 type Paragraph = {
   type: "paragraph";
