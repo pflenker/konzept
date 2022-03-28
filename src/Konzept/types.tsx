@@ -8,7 +8,7 @@ type Text = {
   strikethrough?: boolean;
   highlight?: boolean;
 };
-type Editor = BaseEditor & ReactEditor;
+export type Editor = BaseEditor & ReactEditor;
 type Paragraph = {
   type: "paragraph";
   children: Text[];
