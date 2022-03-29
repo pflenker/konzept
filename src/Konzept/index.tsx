@@ -5,6 +5,7 @@ import { createEditor, Descendant } from "slate";
 import { Editor } from "./types";
 import handleHotkeys from "./handleHotkeys";
 import renderLeaf from "./renderLeaf";
+import withShortcuts from "./withShortcuts";
 
 const initialValue: Descendant[] = [
   {
@@ -22,7 +23,7 @@ function onKeyDown(event: KeyboardEvent, editor: Editor) {
 
 export default function Konzept() {
   const [value, setValue] = useState<Descendant[]>(initialValue);
-  const editor = useMemo(() => withReact(createEditor()), []);
+  const editor = useMemo(() => withShortcuts(withReact(createEditor())), []);
   return (
     <>
       <Slate
