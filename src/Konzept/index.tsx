@@ -4,6 +4,7 @@ import { createEditor, Descendant } from "slate";
 
 import { Editor } from "./types";
 import handleHotkeys from "./handleHotkeys";
+import renderLeaf from "./renderLeaf";
 
 const initialValue: Descendant[] = [
   {
@@ -32,6 +33,7 @@ export default function Konzept() {
         <Editable
           spellCheck
           autoFocus
+          renderLeaf={renderLeaf}
           onKeyDown={(event) => onKeyDown(event, editor)}
         />
       </Slate>
