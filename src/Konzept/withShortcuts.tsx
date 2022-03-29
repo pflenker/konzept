@@ -31,7 +31,7 @@ function handleInlineShortcuts(editor: Editor) {
   });
 }
 
-export default function withShortcuts(editor: SlateEditor) {
+export default function withShortcuts(editor: Editor) {
   const { insertText } = editor;
   editor.insertText = (text: string) => {
     insertText(text);
