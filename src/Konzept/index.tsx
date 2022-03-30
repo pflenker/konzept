@@ -6,6 +6,7 @@ import { Editor } from "./types";
 import handleHotkeys from "./handleHotkeys";
 import renderLeaf from "./renderLeaf";
 import withShortcuts from "./withShortcuts";
+import HoveringToolbar from "./HoveringToolbar";
 
 const initialValue: Descendant[] = [
   {
@@ -23,6 +24,7 @@ function onKeyDown(event: KeyboardEvent, editor: Editor) {
 
 export default function Konzept() {
   const [value, setValue] = useState<Descendant[]>(initialValue);
+  const [isFocused, setIsFocused] = useState(true);
   const editor = useMemo(() => withShortcuts(withReact(createEditor())), []);
   return (
     <>
@@ -31,9 +33,12 @@ export default function Konzept() {
         value={value}
         onChange={(value) => setValue(value)}
       >
+        {isFocused && <HoveringToolbar />}
         <Editable
           spellCheck
           autoFocus
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           renderLeaf={renderLeaf}
           onKeyDown={(event) => onKeyDown(event, editor)}
         />
