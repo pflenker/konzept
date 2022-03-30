@@ -1,4 +1,4 @@
-import { Editor as SlateEditor, Range, Node } from "slate";
+import { Editor as SlateEditor, Range } from "slate";
 import { useFocused, useSlate } from "slate-react";
 
 export default function HoveringToolbar() {
