@@ -1,6 +1,37 @@
 import { useRef } from "react";
-import { Editor as SlateEditor, Range } from "slate";
+import { Editor as SlateEditor, Range, Text } from "slate";
 import { useFocused, useSlate } from "slate-react";
+import toggleMark from "./toggleMark";
+import { Editor, Mark } from "./types";
+
+const isFormatActive = (editor: Editor, mark: Mark) => {
+  return Array.from(
+    SlateEditor.nodes(editor, { match: (n) => Text.isText(n) })
+  ).some(([e]) => Text.isText(e) && e[mark]);
+};
+
+const markToButton = {
+  bold: <strong>B</strong>,
+  italic: <em>I</em>,
+  highlight: <mark>H</mark>,
+  strikethrough: <s>S</s>,
+};
+
+function MarkButton({ mark }: { mark: Mark }) {
+  const editor = useSlate();
+  const isActive = isFormatActive(editor, mark);
+  const style = isActive ? { backgroundColor: "LightSalmon" } : {};
+  return (
+    <button
+      style={style}
+      onClick={() => {
+        toggleMark(editor, mark);
+      }}
+    >
+      {markToButton[mark]}
+    </button>
+  );
+}
 
 export default function HoveringToolbar() {
   const editor = useSlate();
@@ -49,18 +80,10 @@ export default function HoveringToolbar() {
         visibility: isVisible ? "visible" : "hidden",
       }}
     >
-      <button>
-        <mark>H</mark>
-      </button>
-      <button>
-        <strong>B</strong>
-      </button>
-      <button>
-        <em>I</em>
-      </button>
-      <button>
-        <s>S</s>
-      </button>
+      <MarkButton mark="highlight" />
+      <MarkButton mark="bold" />
+      <MarkButton mark="italic" />
+      <MarkButton mark="strikethrough" />
     </span>
   );
 }
