@@ -11,6 +11,7 @@ import HoveringToolbar from "./HoveringToolbar";
 const initialValue: Descendant[] = [
   {
     type: "paragraph",
+    decoration: "h1",
     children: [{ text: "" }],
   },
 ];
