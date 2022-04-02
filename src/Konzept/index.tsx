@@ -7,6 +7,7 @@ import handleHotkeys from "./handleHotkeys";
 import renderLeaf from "./renderLeaf";
 import withShortcuts from "./withShortcuts";
 import HoveringToolbar from "./HoveringToolbar";
+import renderElement from "./renderElement";
 
 const initialValue: Descendant[] = [
   {
@@ -41,6 +42,7 @@ export default function Konzept() {
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           renderLeaf={renderLeaf}
+          renderElement={renderElement}
           onKeyDown={(event) => onKeyDown(event, editor)}
         />
       </Slate>
