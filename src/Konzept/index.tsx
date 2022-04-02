@@ -8,6 +8,7 @@ import renderLeaf from "./renderLeaf";
 import withShortcuts from "./withShortcuts";
 import HoveringToolbar from "./HoveringToolbar";
 import renderElement from "./renderElement";
+import withLinebreaks from "./withLinebreaks";
 
 const initialValue: Descendant[] = [
   {
@@ -27,7 +28,10 @@ function onKeyDown(event: KeyboardEvent, editor: Editor) {
 export default function Konzept() {
   const [value, setValue] = useState<Descendant[]>(initialValue);
   const [isFocused, setIsFocused] = useState(true);
-  const editor = useMemo(() => withShortcuts(withReact(createEditor())), []);
+  const editor = useMemo(
+    () => withLinebreaks(withShortcuts(withReact(createEditor()))),
+    []
+  );
   return (
     <>
       <Slate
