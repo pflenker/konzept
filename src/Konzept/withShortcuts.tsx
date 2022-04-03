@@ -1,5 +1,6 @@
 import { Editor as SlateEditor, Range, Text, Transforms, Point } from "slate";
-import { Mark, Editor } from "./types";
+import getParagraph from "./getParagraph";
+import { Mark, Editor, Decoration } from "./types";
 const SHORTCUT_MARK_MAP: Readonly<{
   [key: string]: Mark;
 }> = {
@@ -8,6 +9,33 @@ const SHORTCUT_MARK_MAP: Readonly<{
   _: "italic",
   "~": "strikethrough",
 };
+
+const SHORTCUT_DECORATIONS_MAP: Readonly<{
+  [key: string]: Decoration;
+}> = {
+  "# ": "h1",
+  "## ": "h2",
+  "### ": "h3",
+  "#### ": "h4",
+  "##### ": "h5",
+  "###### ": "h6",
+};
+
+function handleParagraphShortcut(editor: Editor): boolean {
+  const [[, path]] = getParagraph(editor);
+  const { anchor } = editor.selection!;
+  const start = SlateEditor.start(editor, path);
+  const beforeRange = { anchor, focus: start };
+  const beforeText = SlateEditor.string(editor, beforeRange);
+  let decoration = SHORTCUT_DECORATIONS_MAP[beforeText];
+  if (!decoration) {
+    return false;
+  }
+  Transforms.setNodes(editor, { decoration }, { at: path });
+  Transforms.select(editor, beforeRange);
+  Transforms.delete(editor);
+  return true;
+}
 
 function handleInlineShortcuts(editor: Editor) {
   Array.from(
@@ -65,7 +93,7 @@ export default function withShortcuts(editor: Editor) {
     if (text !== " " || !selection || Range.isExpanded(selection)) {
       return;
     }
-    handleInlineShortcuts(editor);
+    handleParagraphShortcut(editor) || handleInlineShortcuts(editor);
   };
   return editor;
 }

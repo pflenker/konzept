@@ -1,11 +1,5 @@
-import {
-  Editor as SlateEditor,
-  Range,
-  Transforms,
-  Node,
-  Element,
-  NodeEntry,
-} from "slate";
+import { Editor as SlateEditor, Range, Transforms, Node } from "slate";
+import getParagraph from "./getParagraph";
 import switchMark from "./switchMark";
 import { Mark, Editor, Paragraph } from "./types";
 function disableAllMarks(editor: Editor) {
@@ -19,14 +13,6 @@ function getTextFromParagraph(paragraph: Paragraph) {
   let ret = "";
   Array.from(Node.texts(paragraph)).forEach(([text]) => (ret += text.text));
   return ret;
-}
-
-function getParagraph(editor: Editor): Array<NodeEntry<Paragraph>> {
-  return Array.from(
-    SlateEditor.nodes(editor, {
-      match: (n) => Element.isElement(n) && n.type === "paragraph",
-    })
-  );
 }
 
 function getCurrentText(editor: Editor) {
